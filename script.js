@@ -65,3 +65,30 @@ restartBtn.addEventListener('click', restartGame);
 
 // Initialize
 status.textContent = `Player ${currentPlayer}'s turn`;
+function checkWinner() {
+    let roundWon = false;
+    for (let i = 0; i < winningConditions.length; i++) {
+        const [a, b, c] = winningConditions[i];
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+            roundWon = true;
+            break;
+        }
+    }
+
+    if (roundWon) {
+        status.textContent = `Player ${currentPlayer} Wins! 🎉`;
+        isGameActive = false;
+        return;
+    }
+
+    // If all cells are filled and no winner
+    if (!board.includes('')) {
+        status.textContent = "No Winner 😐";
+        isGameActive = false;
+        return;
+    }
+
+    // Switch turn
+    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    status.textContent = `Player ${currentPlayer}'s turn`;
+}
